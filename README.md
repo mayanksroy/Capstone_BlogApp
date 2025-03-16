@@ -1,28 +1,85 @@
-##Capstone Project for J2EE Java Training Batch
+# Spring Boot Blog Application
 
-#Blog Application
+## Table of Contents
+1. Introduction
+2. Project Setup
+3. Technologies Used
+4. Application Architecture
+5. Database Schema
+6. REST API Endpoints
+7. Request and Data Flow
+8. Exception Handling
+9. Conclusion
 
-This is a Blog Application which consist of Various methods related to Blog Application like as
-- Post Blog
-- Update Blog
-- Get Blog
-- Delete Blog
-- Post Comment
+---
 
-It uses two separate tables of MYSQL Database locally 
-- Blogs
-- Comments
+## 1. Introduction
+The **Spring Boot Blog Application** is a RESTful API designed for managing blog posts and comments efficiently. It enables users to perform CRUD operations on blog posts and interact with the content.
 
-Post Blog - It is a create method which creates a New Blog in the Database with id, title and content.
-ID - It is a self generating column with Identity Type, which means it follows a sequence of Numbers by itself unique for each row. As it is also considered as the Primary Key
-TITLE - It is a column which takes data as Title of Blog in String format with constaints of NotBlank and Size(3 to 100 characters).
-Content - It is a column which takes data as Content of Blog in String format with constraints of NotBlank and Size(3 to 200 characters).
+## 2. Project Setup
+- **Spring Boot** for application development
+- **Spring Data JPA** for database interactions
+- **ModelMapper** for DTO to Entity conversion
+- **MySQL** as the relational database
+- **Lombok** for reducing boilerplate code
+- **Maven** for dependency management
 
-Update Blog - It is a update method which updates the existing Blog in the Database with title and content using Id as finding key.
+## 3. Technologies Used
+- Java 17+
+- Spring Boot 3+
+- Spring Data JPA
+- MySQL Database
+- ModelMapper
+- Lombok
+- Maven
 
-Get Blog - It is a fetching method which fetches the data from the Blog Database of the existing Blog using Id as finding key.
+## 4. Application Architecture
+The application follows a layered architecture:
+- **Controller Layer:** Handles HTTP requests and responses.
+- **Service Layer:** Implements business logic.
+- **Repository Layer:** Communicates with the database.
+- **DTO Layer:** Transfers data between layers.
 
-Delete Blog - It is a deleting method which deleted the data of a particular Blog from the Blog Database using Id as finding key.
+## 5. Database Schema
+The database consists of the following main tables:
 
-Post Comment - It is a create method which create a New Comment in the Database with id, blogid and comment.
-              It will create a comment on when an existing Blog is present in the Blogs database which is checked using BlogId.
+### Post Table
+| Column     | Type           | Description |
+|------------|--------------|-------------|
+| id         | Long         | Primary Key |
+| title      | String       | Post Title  |
+| content    | String       | Post Content |
+
+### Comment Table
+| Column     | Type           | Description |
+|------------|--------------|-------------|
+| id         | Long         | Primary Key |
+| blog_id    | Long         | Foreign Key referencing Blog |
+| comment    | String       | Comment Content |
+
+
+## 6. REST API Endpoints
+### Post Management
+- **Create Blog Post:** `POST /api/blogs`
+- **Get Post by ID:** `GET /api/blogs/{id}`
+- **Update Post:** `PUT /api/blogs/{id}`
+- **Delete Post:** `DELETE /api/blogs/{id}`
+
+### Comment Management
+- **Add Comment to Post:** `POST /api/blogs/comment`
+
+## 7. Request and Data Flow
+1. **User sends HTTP request** (e.g., `POST /api/blogs` with JSON payload).
+2. **Controller processes request**, calls Service layer.
+3. **Service applies business logic** and interacts with Repository.
+4. **Repository queries database** using Spring Data JPA.
+5. **Response is sent back** to the client as JSON.
+
+## 8. Exception Handling
+- **Global Exception Handler** using `@ControllerAdvice`.
+- **Custom Exceptions** for handling validation and not-found cases.
+- **Standardized error response format**.
+
+## 9. Conclusion
+This project provides a structured and secure approach to blog management using Spring Boot. It ensures modularity, security, and scalability while offering efficient request handling.
+
