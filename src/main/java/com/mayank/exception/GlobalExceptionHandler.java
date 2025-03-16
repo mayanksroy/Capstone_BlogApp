@@ -18,8 +18,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleResourceNotFoundException(BlogNotFoundException ex) 
 	{
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Resource Not Found");
-        response.put("message", ex.getMessage());
+        response.put("Error Message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 	
@@ -28,7 +27,7 @@ public class GlobalExceptionHandler {
 	{
         ExceptionResponse response = new ExceptionResponse(
                 LocalDateTime.now(),
-                "An unexpected error occurred",
+                "An unexpected error occurred, Sorry for inconvenience caused!",
                 request.getDescription(false)
         );
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

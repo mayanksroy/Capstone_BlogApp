@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mayank.dto.CommentDTO;
 import com.mayank.entity.Comment;
-import com.mayank.exception.BlogNotFoundException;
+import com.mayank.exception.InvalidDataException;
 import com.mayank.repository.BlogRepository;
 import com.mayank.repository.CommentRepository;
 
@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
 	{
 		if (!blogRepo.existsById(commentdto.getBlogid())) 
 		{
-			throw new BlogNotFoundException("Blog not found for ID: " + commentdto.getBlogid());
+			throw new InvalidDataException("Blog not found for ID: " + commentdto.getBlogid());
 		}
 
 		Comment comment = modelmapper.map(commentdto, Comment.class);

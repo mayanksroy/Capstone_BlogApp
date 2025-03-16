@@ -1,0 +1,31 @@
+services:
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blogdb
+      MYSQL_USER: ms
+      MYSQL_PASSWORD: ms
+    networks:
+      - blognetwork
+
+  blogapp:
+    build: .
+    container_name: blogapp
+    restart: always
+    depends_on:
+      - mysqldb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb/blogdb
+      SPRING_DATASOURCE_USERNAME: ms
+      SPRING_DATASOURCE_PASSWORD: ms
+    ports:
+      - "8081:8080"
+    networks:
+      - blognetwork
+
+networks:
+  blognetwork:
+    driver: bridge
